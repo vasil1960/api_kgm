@@ -16,7 +16,7 @@ Route::get('/', 'SearchController@allkgm');
 Route::group(['prefix'=>'api'], function() {
 //    Route::resource('kgm','KgmController');
 
-    Route::get('kgm/allkgm/',['as'=>'api.kgm.allkgm','uses'=>'SearchController@allkgm']);
+    Route::get('kgm/all/',['as'=>'api.kgm.all','uses'=>'SearchController@all']);
 
     Route::get('kgm/bynumb/{seria}/{number}',['as'=>'api.kgm.bynumb','uses'=>'SearchController@bynumb']);
 });
