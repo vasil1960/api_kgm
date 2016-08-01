@@ -1,24 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 use App\Kgm;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
-
-
 class SearchController extends Controller
 {
-
-    public function all(Request $request)
+    public function marks(Request $request)
     {
-//        $kgms = Kgm::all()->take(5);
-//        dd($request->seria);
-
         $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
                    ->join('u_address','u_address.NamesID','=','u_names.ID')
                    ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
@@ -27,8 +17,6 @@ class SearchController extends Controller
                        ['strNumberKGM','LIKE', '%'. $request->number . '%']
                    ])
                    ->take(100)->get();
-
-//     dd($kgms);
 
         if( ! $kgms)
         {
@@ -42,29 +30,21 @@ class SearchController extends Controller
         return Response::json([
             'records'=> $this->transformCollection($kgms)
         ], 200);
-
     }
 
-    public function byId(Request $request)
+    public function name(Request $request)
     {
-
-//        $kgms = Kgm::find($request->kgm_id);
-
-        $kgms = Kgm::find($request->kgm_id)
-                   ->join('u_names','u_names.ID','=','u_kgm.NamesID')
+        $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
                    ->join('u_address','u_address.NamesID','=','u_names.ID')
                    ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
-//                   ->where('ID', $request->kgm_id)
-//                   ->where('strNumberKGM', $number)
-                   ->get();
-
-//        dd($kgms);
+                   ->where('u_names.ID', $request->names_id)
+                   ->first();
 
         if( ! $kgms)
         {
             return Response::json([
                 'error'=> [
-                    'message'=>'Няма такава марка'
+                    'message'=>'Няма такова име'
                 ]
             ], 404);
         }
@@ -74,38 +54,10 @@ class SearchController extends Controller
         ], 200);
     }
 
-//    public function byname($ime, $familia)
-//    {
-//        $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
-//            ->join('u_address','u_address.NamesID','=','u_names.ID')
-//            ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
-//            ->where([
-//                ['Ime', 'LIKE', $ime .'%'],
-//                ['Familia', 'LIKE' , $familia .'%']
-//            ])
-////            ->where('Familia', 'LIKE' , $familia .'%')
-//            ->first();
-//
-////        dd($kgms);
-//
-//        if( ! $kgms)
-//        {
-//            return Response::json([
-//                'error'=> [
-//                    'message'=>'Няма такава марка'
-//                ]
-//            ], 404);
-//        }
-//
-//        return Response::json([
-//            'recotds'=> $this->transform($kgms)
-//        ], 200);
-//    }
     private function transformCollection($kgms)
     {
         return array_map([$this ,'transform'],$kgms->toArray());
     }
-
 
     private function transform($kgms)
     {

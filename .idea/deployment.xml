@@ -2,14 +2,21 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
-      <paths name="gps.app">
+      <paths name="gps">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="iag112">
+      <paths name="iagLumen">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="iagSlim">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
@@ -23,14 +30,14 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="lrv.system.iag.bg">
+      <paths name="lrv-sftp">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>
-      <paths name="lrv.system.iag.bg (1)">
+      <paths name="lrv.system.iag.bg">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />

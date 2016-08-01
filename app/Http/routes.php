@@ -14,12 +14,9 @@
 
 
 Route::group(['prefix'=>'api'], function() {
-//    Route::resource('kgm','KgmController');
-    Route::get('/', 'SearchController@all');
 
-    Route::get('kgm/search','SearchController@all');
+    Route::get('kgm/search','SearchController@marks');
 
-    Route::get('kgm/get','SearchController@byId');
+    Route::get('kgm/get','SearchController@name');
 
-//    Route::get('kgm/byname/{ime}/{familia}',['as'=>'api.kgm.byname','uses'=>'SearchController@byname']);
 });
