@@ -42,13 +42,16 @@ class SearchController extends Controller
 
 
 
-    public function bynumb($seria, $number)
+    public function bySerNumb($seria, $number)
     {
         $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
                    ->join('u_address','u_address.NamesID','=','u_names.ID')
                    ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
-                   ->where('SeriaKGM', $seria)
-                   ->where('strNumberKGM', $number)
+                   ->where([
+                       ['SeriaKGM', $seria],
+                       ['strNumberKGM', $number]
+                   ])
+//                   ->where('strNumberKGM', $number)
                    ->first();
 
 //        dd($kgms);
@@ -67,6 +70,33 @@ class SearchController extends Controller
         ], 200);
     }
 
+//    public function byname($ime, $familia)
+//    {
+//        $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
+//            ->join('u_address','u_address.NamesID','=','u_names.ID')
+//            ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
+//            ->where([
+//                ['Ime', 'LIKE', $ime .'%'],
+//                ['Familia', 'LIKE' , $familia .'%']
+//            ])
+////            ->where('Familia', 'LIKE' , $familia .'%')
+//            ->first();
+//
+//        dd($kgms);
+//
+//        if( ! $kgms)
+//        {
+//            return Response::json([
+//                'error'=> [
+//                    'message'=>'Няма такава марка'
+//                ]
+//            ], 404);
+//        }
+//
+//        return Response::json([
+//            'data'=> $this->transform($kgms)
+//        ], 200);
+//    }
 //    private function transformCollection($kgms)
 //    {
 //        return array_map([$this ,'transform'],$kgms->toArray());

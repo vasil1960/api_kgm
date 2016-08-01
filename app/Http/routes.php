@@ -18,5 +18,7 @@ Route::group(['prefix'=>'api'], function() {
 
     Route::get('kgm/all/',['as'=>'api.kgm.all','uses'=>'SearchController@all']);
 
-    Route::get('kgm/bynumb/{seria}/{number}',['as'=>'api.kgm.bynumb','uses'=>'SearchController@bynumb']);
+    Route::get('kgm/bySerNumb/{seria}/{number}',['as'=>'api.kgm.sernumb','uses'=>'SearchController@bySerNumb']);
+
+    Route::get('kgm/byname/{ime}/{familia}',['as'=>'api.kgm.byname','uses'=>'SearchController@byname']);
 });
