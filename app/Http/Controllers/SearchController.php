@@ -14,45 +14,49 @@ use Illuminate\Support\Facades\Response;
 class SearchController extends Controller
 {
 
-//    public function all()
-//    {
-////        $kgms = Kgm::all()->take(5);
-//
-//        $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
-//                   ->join('u_address','u_address.NamesID','=','u_names.ID')
-//                   ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
-//                   ->take(100)->get();
-//
-////        dd($kgms);
-//
-//        if( ! $kgms)
-//        {
-//            return Response::json([
-//                'error'=> [
-//                    'message'=>'Няма такава марка'
-//                ]
-//            ], 404);
-//        }
-//
-//        return Response::json([
-//            'data'=> $this->transformCollection($kgms)
-//        ], 200);
-//
-//    }
-
-
-
-    public function bySerNumb($seria, $number)
+    public function all(Request $request)
     {
+//        $kgms = Kgm::all()->take(5);
+//        dd($request->seria);
+
         $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
                    ->join('u_address','u_address.NamesID','=','u_names.ID')
                    ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
                    ->where([
-                       ['SeriaKGM', $seria],
-                       ['strNumberKGM', $number]
+                       ['SeriaKGM', $request->seria],
+                       ['strNumberKGM','LIKE', '%'. $request->number . '%']
                    ])
+                   ->take(100)->get();
+
+//     dd($kgms);
+
+        if( ! $kgms)
+        {
+            return Response::json([
+                'error'=> [
+                    'message'=>'Няма такава марка'
+                ]
+            ], 404);
+        }
+
+        return Response::json([
+            'records'=> $this->transformCollection($kgms)
+        ], 200);
+
+    }
+
+    public function byId(Request $request)
+    {
+
+//        $kgms = Kgm::find($request->kgm_id);
+
+        $kgms = Kgm::find($request->kgm_id)
+                   ->join('u_names','u_names.ID','=','u_kgm.NamesID')
+                   ->join('u_address','u_address.NamesID','=','u_names.ID')
+                   ->join('regions.PopulatedPlaces','regions.PopulatedPlaces.ID','=','u_address.Grad')
+//                   ->where('ID', $request->kgm_id)
 //                   ->where('strNumberKGM', $number)
-                   ->first();
+                   ->get();
 
 //        dd($kgms);
 
@@ -66,7 +70,7 @@ class SearchController extends Controller
         }
 
         return Response::json([
-            'data'=> $this->transform($kgms)
+            'records'=> $this->transform($kgms)
         ], 200);
     }
 
@@ -82,7 +86,7 @@ class SearchController extends Controller
 ////            ->where('Familia', 'LIKE' , $familia .'%')
 //            ->first();
 //
-//        dd($kgms);
+////        dd($kgms);
 //
 //        if( ! $kgms)
 //        {
@@ -94,30 +98,35 @@ class SearchController extends Controller
 //        }
 //
 //        return Response::json([
-//            'data'=> $this->transform($kgms)
+//            'recotds'=> $this->transform($kgms)
 //        ], 200);
 //    }
-//    private function transformCollection($kgms)
-//    {
-//        return array_map([$this ,'transform'],$kgms->toArray());
-//    }
+    private function transformCollection($kgms)
+    {
+        return array_map([$this ,'transform'],$kgms->toArray());
+    }
+
 
     private function transform($kgms)
     {
         return [
-            'ime'      => $kgms['Ime'],
-            'prezime'  => $kgms['Prezime'],
-            'familia'  => $kgms['Familia'],
-            'seria'    => $kgms['SeriaKGM'],
-            'number'   => $kgms['strNumberKGM'],
-            'grad'     => $kgms['PolpulatedPlace'],
-            'obshtina' => $kgms['Municipality'],
-            'oblast'   => $kgms['Region'],
-            'email'    => $kgms['Email'],
-            'phone   ' => $kgms['Phone'],
-            'egn'      => $kgms['EGN_EIK'],
-            'address'  => $kgms['AddressP'],
-            'active'   => (boolean) $kgms['Active'],
+
+            'kgm_id'    => $kgms['ID'],
+            'udo_kgm_id'=> $kgms['UdoKgmID'],
+            'names_id'  => $kgms['NamesID'],
+            'ime'       => $kgms['Ime'],
+            'prezime'   => $kgms['Prezime'],
+            'familia'   => $kgms['Familia'],
+            'seria'     => $kgms['SeriaKGM'],
+            'number'    => $kgms['strNumberKGM'],
+            'grad'      => $kgms['PolpulatedPlace'],
+            'obshtina'  => $kgms['Municipality'],
+            'oblast'    => $kgms['Region'],
+            'email'     => $kgms['Email'],
+            'phone'     => $kgms['Phone'],
+            'egn'       => $kgms['EGN_EIK'],
+            'address'   => $kgms['AddressP'],
+            'active'    => (boolean) $kgms['Active'],
         ];
     }
 }

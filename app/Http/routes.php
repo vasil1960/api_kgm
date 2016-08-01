@@ -11,14 +11,15 @@
 |
 */
 
-Route::get('/', 'SearchController@allkgm');
+
 
 Route::group(['prefix'=>'api'], function() {
 //    Route::resource('kgm','KgmController');
+    Route::get('/', 'SearchController@all');
 
-    Route::get('kgm/all/',['as'=>'api.kgm.all','uses'=>'SearchController@all']);
+    Route::get('kgm/search','SearchController@all');
 
-    Route::get('kgm/bySerNumb/{seria}/{number}',['as'=>'api.kgm.sernumb','uses'=>'SearchController@bySerNumb']);
+    Route::get('kgm/get','SearchController@byId');
 
-    Route::get('kgm/byname/{ime}/{familia}',['as'=>'api.kgm.byname','uses'=>'SearchController@byname']);
+//    Route::get('kgm/byname/{ime}/{familia}',['as'=>'api.kgm.byname','uses'=>'SearchController@byname']);
 });

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="812f2558-a0cb-4fb2-b65c-a2906a9abdda" name="kgmapi" url="http://172.16.4.40/home/api/kgmapi/public">
+        <fileTransfer host="172.16.4.40" port="22" rootFolder="/home/api" accessType="SFTP" username="api">
+          <advancedOptions>
+            <advancedOptions controlEncoding="utf-8" dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
