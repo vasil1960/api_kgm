@@ -12,11 +12,16 @@
 */
 
 
-
+// API Контролни горски марки
 Route::group(['prefix'=>'api'], function() {
 
     Route::get('kgm/search','KgmapiController@marks');
 
     Route::get('kgm/get','KgmapiController@name');
+
+});
+
+// API
+Route::group(['prefix'=>'api'], function() {
 
 });

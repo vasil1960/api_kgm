@@ -2,8 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="812f2558-a0cb-4fb2-b65c-a2906a9abdda" name="kgmapi" url="http://172.16.4.40/home/api/kgmapi/public">
-        <fileTransfer host="172.16.4.40" port="22" rootFolder="/home/api" accessType="SFTP" username="api">
+      <webServer id="89641d65-e019-43c2-803a-659f6919f786" name="phpapi" url="http://172.16.4.40/">
+        <fileTransfer host="172.16.4.40" port="22" rootFolder="/home/api/web/php" accessType="SFTP" username="api">
           <advancedOptions>
             <advancedOptions controlEncoding="utf-8" dataProtectionLevel="Private" />
           </advancedOptions>

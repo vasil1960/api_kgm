@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Response;
 
 class KgmapiController extends Controller
 {
+    // api/kgm/search?seria=А&number=3092
     public function marks(Request $request)
     {
         $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
@@ -18,21 +19,23 @@ class KgmapiController extends Controller
                    ])
                    ->take(100)->get();
 
-        if( ! $kgms)
+        if( $kgms->count() == 0 )
         {
             return Response::json([
-//                'error'=> [
-                    'message'=>'Няма такава марка'
-//                ]
-            ], 404);
+                    'status_message'=>'Няма такава марка',
+                    'status_code'   => 404
+            ], 200);
         }
 
         return Response::json([
             'records'=> $this->transformCollection($kgms),
-            'status_message' => 'Извличането на данни завърши успешно'
+            'status_message' => 'Извличането на данни завърши успешно',
+            'status_code'    => 200
         ], 200);
     }
 
+
+    // api/kgm/get?names_id=4093
     public function name(Request $request)
     {
         $kgms = Kgm::join('u_names','u_names.ID','=','u_kgm.NamesID')
@@ -44,15 +47,15 @@ class KgmapiController extends Controller
         if( ! $kgms)
         {
             return Response::json([
-//                'error'=> [
-                    'status_message'=>'Няма такова име'
-//                ]
-            ], 404);
+                'status_message'=>'Няма такова лице',
+                'status_code'   => 404
+            ], 200);
         }
 
         return Response::json([
-            'records' => $this->transform($kgms),
-            'status_message' => 'Извличането на данни завърши успешно'
+                'records' => $this->transform($kgms),
+                'status_message' => 'Извличането на данни завърши успешно',
+                'status_code'    => 200
         ], 200);
     }
 
@@ -64,7 +67,6 @@ class KgmapiController extends Controller
     private function transform($kgms)
     {
         return [
-
             'kgm_id'    => $kgms['ID'],
             'udo_kgm_id'=> $kgms['UdoKgmID'],
             'names_id'  => $kgms['NamesID'],
