@@ -5,7 +5,7 @@ use App\Kgm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
-class SearchController extends Controller
+class KgmapiController extends Controller
 {
     public function marks(Request $request)
     {
@@ -21,14 +21,15 @@ class SearchController extends Controller
         if( ! $kgms)
         {
             return Response::json([
-                'error'=> [
+//                'error'=> [
                     'message'=>'Няма такава марка'
-                ]
+//                ]
             ], 404);
         }
 
         return Response::json([
-            'records'=> $this->transformCollection($kgms)
+            'records'=> $this->transformCollection($kgms),
+            'status_message' => 'Извличането на данни завърши успешно'
         ], 200);
     }
 
@@ -43,14 +44,15 @@ class SearchController extends Controller
         if( ! $kgms)
         {
             return Response::json([
-                'error'=> [
-                    'message'=>'Няма такова име'
-                ]
+//                'error'=> [
+                    'status_message'=>'Няма такова име'
+//                ]
             ], 404);
         }
 
         return Response::json([
-            'records'=> $this->transform($kgms)
+            'records' => $this->transform($kgms),
+            'status_message' => 'Извличането на данни завърши успешно'
         ], 200);
     }
 

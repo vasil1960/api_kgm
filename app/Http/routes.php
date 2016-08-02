@@ -15,8 +15,8 @@
 
 Route::group(['prefix'=>'api'], function() {
 
-    Route::get('kgm/search','SearchController@marks');
+    Route::get('kgm/search','KgmapiController@marks');
 
-    Route::get('kgm/get','SearchController@name');
+    Route::get('kgm/get','KgmapiController@name');
 
 });
